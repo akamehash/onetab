@@ -5,7 +5,7 @@
       "upgradePackages": "true"
     }
   },
-  // "remoteUser": "vscode",
+  "remoteUser": "vscode",
   "runArgs": ["--privileged"]
 }
 
