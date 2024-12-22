@@ -5,7 +5,10 @@
       "upgradePackages": "true"
     }
   },
+  "workspaceMount": "source=/,target=/app,type=bind,consistency=delegated",
+  "workspaceFolder": "/app",
   "remoteUser": "vscode",
-  "runArgs": ["--privileged"]
+  "runArgs": [
+    "--privileged"
+  ]
 }
-
