@@ -1,0 +1,11 @@
+{
+  "image": "nginx:latest",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:1": {
+      "upgradePackages": "true"
+    }
+  },
+  // "remoteUser": "vscode",
+  "runArgs": ["--privileged"]
+}
+
