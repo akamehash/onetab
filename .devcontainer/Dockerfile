@@ -1,6 +1,7 @@
 # [Choice] Ubuntu version (use jammy or bionic on local arm64/Apple Silicon): jammy, focal, bionic
-ARG VARIANT="focal"
-FROM buildpack-deps:${VARIANT}-curl
+# ARG VARIANT="focal"
+# FROM buildpack-deps:${VARIANT}-curl
+FROM ubuntu:22.04
 
 LABEL dev.containers.features="common"
 ENV CHROME_BIN=/usr/bin/chromium
