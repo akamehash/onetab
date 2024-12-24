@@ -1,9 +1,9 @@
 name: Build Next
-repoFullName: Default Repository
+repoFullName: akamehash-akamehash/onetab
 on:
   push:
     branches:
-      - Default Branch
+      - main
 jobs:
   run-deploy:
     runs-on: docker:23.0.5-alpine3.17
