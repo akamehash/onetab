@@ -1,19 +1,37 @@
-name: Build Next
+name: Python application
 repoFullName: akamehash-akamehash/onetab
 on:
   push:
     branches:
       - main
 jobs:
-  run-deploy:
-    runs-on: docker:23.0.5-alpine3.17
+  build:
+    runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: /
+        working-directory: ${{env.workDir}}
     steps:
-      - uses: actions/setup-node@v3
-        name: Setup environment
+      - name: Setup jobs
+        uses: actions/checkout@v3
+      - name: GitHub Setup
+        run: |
+          git checkout .
+          git checkout main
+          git pull origin main
+      - name: Set up Python
+        uses: actions/setup-python@v3
         with:
-          node-version:
+          python-version: '3.10'
       - name: Install dependencies
-        run: docker volume create --name volume && apk update && apk add wget dropbear bash curl procps && docker run --rm --net=host --privileged --name devtest -v volume:/app -i -t ubuntu:22.04 /bin/bash -c "sleep 600"
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 pytest
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Lint with flake8
+        run: |
+          # stop the build if there are Python syntax errors or undefined names
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+      - name: Test with pytest
+        run: pytest
